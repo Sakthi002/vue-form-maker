@@ -1,24 +1,49 @@
 <template>
- 
-	<div id="app">
-	  
-        <div class="fm-header">
-	        
-	        <div class="fm-title">Form Builder</div>
+  <div id="app">
+    <div class="fm-header">
+      <img class="fm-logo" src="./assets/logo.png">
+      <div class="fm-title" @click="handleHome">{{$t('header.title')}}</div>
+
+
+      <div class="fm-link">
+
+<!--        <a class="ad" href="https://form.making.link" target="_blank">{{$t('header.advanced')}}</a>-->
+<!--        <a target="_blank" href="https://form.making.link/docs/bv/guide.html" v-if="$i18n.locale == 'zh-CN'">{{$t('header.document')}}</a>-->
+<!--        <a target="_blank" href="https://form.making.link/docs/en/bv/guide.html" v-if="$i18n.locale == 'en-US'">{{$t('header.document')}}</a>-->
+<!--        -->
+        <a target="_blank" href="https://github.com/GavinZhuLei/vue-form-making"></a>
+
+        <div class="action-item">
+          <el-dropdown trigger="click" @command="handleLangCommand">
+            <span class="el-dropdown-link">
+              {{$route.params.lang == 'zh-CN' ? '简体中文' : 'English'}}<i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="zh-CN">简体中文</el-dropdown-item>
+              <el-dropdown-item command="en-US">English</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </div>
-    
-		<div class="fm-container">
-			
-			<router-view/>
-		</div>
+      </div>
+    </div>
+    <div  class="fm-container"><router-view/></div>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 
 export default {
- 
-	name: 'app'
+  name: 'app',
+  methods: {
+    handleHome () {
+      this.$router.push({path: '/'})
+    },
+
+    handleLangCommand (command) {
+      this.$router.replace({name: this.$route.name, params: {lang: command}})
+    }
+  }
 }
 </script>
 
